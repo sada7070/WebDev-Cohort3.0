@@ -1,0 +1,63 @@
+header img {
+    width: 150px;
+    height: 110px;
+    margin-top: -30px;
+}
+
+.topBar {
+    display: flex;
+    padding-left: 185px;
+    padding-right: 205px;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.spanBar {
+    margin-top: 17px;
+}
+
+.topList {
+    padding-left: 35px;
+    color: #666;
+}
+
+.dropMenu {
+    width: 28px;
+    height: 30px;
+}
+
+hr {
+    margin-top: -22px;
+}
+
+.mainImg img{
+    width: 700px;
+    height: 270px;
+    padding-left: 430px;
+    padding-top: 80px;
+}
+
+h1 {
+    text-align: center;
+    color: #424242;
+    font-size: 48px;
+    margin-top: 80px;
+}
+
+h2 {
+    text-align: center;
+    color: #424242;
+    margin-top: -16px;
+    font-weight: 100;
+}
+
+button {
+    margin-left: 680px;
+    margin-top: 25px;
+    color: white;
+    background-color: #387ed1;
+    border: 1px solid rgba(0, 0, 0, 0) !important;
+    padding: 12px 24px;
+    border-radius: 3px;
+    font-size: 20px;
+}
