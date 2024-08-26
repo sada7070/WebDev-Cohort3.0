@@ -1,0 +1,11 @@
+In this week of Chohrt3.0, we learned about,
+Asynchronous Javascript   : a) IO Synchronous.
+                            b) IO Asynchronous.
+                            c) setTimeoout.
+Promises and asynch-await : a) Promise creation.
+                            b) Custom promises.
+                            c) Classes.
+                            d) Callbackhell V/S Promises.
+                            e) Reject in promise.
+                            f) Async-await.
+Bash and terminal commands.
