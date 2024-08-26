@@ -1,0 +1,31 @@
+Basic Bash commands:
+
+1) To access windows in WSL 					=>	 "cd /mnt/".
+
+2) To print the current directory name 				=>	 "pwd". (Print Working Directory)
+
+3) To change directory 						=> 	 "cd". (Change Directory) (eg: cd test_file)
+
+4) To list all files/folders in the current directory 		=>	 "ls". (List) 
+
+5) To create new folder 					=> 	 "mkdir". (Make Directory) (eg: mkdir/test_folder)
+
+6) To create new file 						=> 	 "touch". (eg: touch test_file.txt)
+
+7) To see the content of a file in terminal 			=>	 "cat". (Concatenate) (eg: cat test_file.txt)
+
+8) To move file/folder 						=>	 "mv source_file dest_file". (Move)
+
+9)	
+   (a) To copy a file to folder 				=>	 "cp source_file.txt dest_folder)". (Copy)
+   (b) To copy folder to another folder 			=>	 "cp -r source_folder dest_folder)".
+		
+10) To edit content of a file in terminal 			=>	 "vi". (Vim) (eg: vi test_file.txt)
+	Vim commands: (a) to start editing file start with 	=>	 "i".
+		      (b) to save & exit the file 		=>	 "Esc:wq!".
+		      (c) to exit without saving the file 	=>	 "Esc:w!".
+
+11) For JS workspace in terminal 				=>	 "node".
+
+12) To use/download external JS library 			=>	 "npm library_name". (Node Pakage Manager)
+
