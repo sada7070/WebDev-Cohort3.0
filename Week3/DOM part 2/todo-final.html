@@ -1,0 +1,70 @@
+<!--
+    State derived frontends.
+    To make frontends easier to code, the concept of 'state' came into the picture. You will see this more when we reach react.
+    There are three jargon we need to understand
+        State - The variable parts of an app.
+        Components - How to render  state on screen.
+        Rendering - Taking the state and rendering it on the DOM based on the components(refer the image in this folder).
+-->
+        
+<html>
+    <body>
+        <input type="text">
+        <button onclick="addTodo()">Add Todo!!</button>
+        <button onclick="deleteFirstTodo()">DeleteFirstTodo!!</button>
+        <button onclick="deleteLastTodo()">DeleteLastTodo!!</button>
+
+        <!-- creating the parent div -->
+        <div id="todos"></div>
+        <script>
+            let todos = [];
+            function addTodo() {
+                todos.push({
+                    title: document.querySelector("input").value
+                })
+                render()
+            }
+
+            function deleteLastTodo() {
+                todos.pop();
+                render()
+            }
+
+            function deleteFirstTodo() {
+                todos.splice(0, 1);
+                render()
+            }
+
+            function deleteTodoAt(index) {
+                todos.splice(index, 1);
+                render()
+            }
+
+            // this function is creating the todo element with button and returning it as "div".
+            function createTodoComponent(todo, index) {
+                const div = document.createElement("div");
+                const h4 = document.createElement("h4");
+                const button = document.createElement("button");
+                button.innerHTML = "Delete";
+                button.setAttribute("onclick", "deleteTodoAt("+ index+ ")");
+                h4.innerHTML = todo.title;
+                div.append(h4);
+                div.append(button);
+                return div;
+            }   
+
+            function render() {
+
+                // here we are going to clear the screen and printing all todos again.
+                // comment and run the below line to see difference.
+                document.querySelector("#todos").innerHTML="";
+                for(let i = 0; i < todos.length; i++) {
+                    const element = createTodoComponent(todos[i], i);   
+
+                    // we are appending the child to the parent "div" not to the body.                
+                    document.querySelector("#todos").appendChild(element)
+                }
+            }
+        </script>
+    </body>
+</html>

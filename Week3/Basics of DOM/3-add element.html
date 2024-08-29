@@ -1,0 +1,26 @@
+<!--
+    What we’re learning -
+        1 - createElement
+        2 - appendChild
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id = "topDiv">
+        hi There.
+    </div>
+</body>
+
+<script>
+    const divEl = document.createElement("div");
+    divEl.innerHTML = "hello!";
+    const parentEl = document.querySelector("body");
+    parentEl.appendChild(divEl);
+</script>
+</html>

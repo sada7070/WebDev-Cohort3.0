@@ -1,0 +1,40 @@
+<!-- 
+ creating simple Todo application
+ Solution - 1
+-->
+
+<html>
+
+    <body>
+        <!-- creating input field with 'addTodo' button -->
+        <input type="text">
+        <button onclick="addTodo()">Add todo!</button>
+    </body>
+
+    <script>
+        let ctr = 1;
+
+        function addTodo() {
+            // accessing input value 
+            const ipValue = document.querySelector("input").value.trim();
+
+            // creating new div element to add the ipValue and button.
+            const newDivEl = document.createElement("div");
+            
+            // here 'setAttribute' attribute setting the 'ctr' value as 'id' to that particular 'newDivEl'.  
+            newDivEl.setAttribute("id", ctr);
+            newDivEl.innerHTML = "<div>" + ipValue + "</div><button onclick='deleteTodo(" + ctr + ")'>delete</button>";
+
+            // appending child to the parent.
+            document.querySelector("body").appendChild(newDivEl);
+            ctr++;
+        }
+        
+        // function to delete the todo list
+        function deleteTodo (index) {
+            const element = document.getElementById(index);
+            element.parentNode.removeChild(element);
+        }
+
+    </script>
+</html>
