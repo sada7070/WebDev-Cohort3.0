@@ -1,0 +1,9 @@
+In this week I learned about DOM manupulation and build simple Todo Application.
+At first we are going to see,
+  - the diifference between static and dynamic website.
+  - how to add todos.
+  - how to delete todos.
+  - simple Todo Application.
+Advance DOM manupulation includes,
+  - Create a mock Reconcilers.
+  - State and State management.
