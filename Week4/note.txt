@@ -1,0 +1,3 @@
+> To check the IP address of any website in WSL - 'ping website.com' (ping google.com).
+> To initialize empty packet.json, go to that particular folder in WSl -> run 'npm init -y'.
+> Command to open a folder in VS code from WSL, first navigate to that folder then -> "code .".
