@@ -6,3 +6,4 @@
     - IP, ports, methods, response, status code, body & 
     routes.
     - postman.
+> note.txt file has some wsl commands
