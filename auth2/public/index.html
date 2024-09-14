@@ -24,7 +24,7 @@
             const password = document.getElementById("signin-password").value;        
         
             // using await cus, axios may take more time based on the server. So using await to ensure the operation undergoes.
-           const response = await axios.post("http://localhost:3000/signin", {
+           const response = await axios.post("http:/localhost:3000/signin", {
                 username: username,
                 password: password
             });
