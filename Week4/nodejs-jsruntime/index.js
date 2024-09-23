@@ -27,3 +27,5 @@ program.command('count')
   });
 
 program.parse();
+
+// to run this in terminal -> node index.js count Lorem-ipsum.txt
