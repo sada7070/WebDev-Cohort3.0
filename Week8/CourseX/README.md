@@ -1,4 +1,4 @@
-####**Steps to create a course selling app**
+**Steps to create a course selling app**
 * Initialize new Node.js project
 * Add Express, Jsonwebtoken, mongoose to it as a dependency
 * Add route skeleton for user login, signup, purchase a course, to preview all courses, to preview the purchased courses.
