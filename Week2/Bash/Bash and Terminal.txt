@@ -29,3 +29,4 @@ Basic Bash commands:
 
 12) To use/download external JS library 			=>	 "npm library_name". (Node Pakage Manager)
 
+13) To delete folder						=>	 "rmdir file_name".
