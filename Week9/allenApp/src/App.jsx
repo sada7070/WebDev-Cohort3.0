@@ -1,47 +1,37 @@
+import { useEffect, useState } from "react";
+
 function App() {
+  // this state is for buttons
+  const [currentTab, setCurrentTab] = useState(1);
+  // this state is for incoming json data
+  const [tabData, setTabData] = useState({});
+  // this state is for "loading" till the data is being fetched from json
+  const [loading, setLoading] = useState(true);
+
+  // useEffect hook has 2 arguments, a function and a dependecy array
+  // in this hook we are fetching json data whenever the todos switched i.e., this hook is hitting backend
+  useEffect(function() {
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/todos/" + currentTab)
+      .then( async res => {
+        const json = await res.json();
+        setTabData(json);
+        setLoading(false);
+      });
+      // this hook runs whenever 'currentTab'(dependency) changes. 
+  }, [currentTab])
+
   return (
-   <div style={{backgroundColor: "#d9d9d9", height: "100vh" }}>
-    <div style={{display: "flex", justifyContent: "center", paddingTop: 20}}>
-      <div>
-        <div>
-          <PostCard></PostCard>
-          <br />
-        </div>
-        <div>
-          <PostCard></PostCard>
-          <br />
-        </div> 
-        <div>
-          <PostCard></PostCard>
-          <br />
-        </div> 
-      </div>
-    </div>
-   </div>
-  )
-}
-
-const style = { width: 220, backgroundColor: "white", borderRadius: 10, borderColor: "gray", borderWidth: 1, padding: 20 }
-
-function PostCard() {
-  return <div style={style}>
-    <div style={{display: "flex"}}>
-      <img src={"https://marketplace.canva.com/EAFuJ5pCLLM/1/0/1600w/canva-black-and-gold-simple-business-man-linkedin-profile-picture-BM_NPo97JwE.jpg"}
-      style={{
-        borderRadius: 25,
-        width: 40,
-        height: 40
-      }}></img>
-      <div style={{fontSize: 10 , marginLeft: 10}}>
-        <b>100xdevs</b>
-        <div> 12,000 followers </div>
-        <div> 30m </div>
-      </div>
-    </div>
-    Hi everyone! this is my first post.
-    Let's connect!!!.
+    // toggling colors when the button clicked & loading the data's title
+  <div>
+    <button onClick={() => setCurrentTab(1)} style={{color: currentTab == 1 ? "red" : "black"}}>Todo #1</button>
+    <button onClick={() => setCurrentTab(2)} style={{color: currentTab == 2 ? "red" : "black"}}>Todo #2</button>
+    <button onClick={() => setCurrentTab(3)} style={{color: currentTab == 3 ? "red" : "black"}}>Todo #3</button>
+    <button onClick={() => setCurrentTab(4)} style={{color: currentTab == 4 ? "red" : "black"}}>Todo #4</button>
+    <br></br>
+    {loading ? "Loading..." : tabData.title}
   </div>
+  );
 }
-  
 
 export default App
