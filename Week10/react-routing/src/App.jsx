@@ -1,47 +1,29 @@
-// routing imports
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
+//useRef is a hook that provides a way to create a reference to a value or a DOM element that persists across renders but does not trigger a re-render when the value changes.
+// Clock with start and stop functionality(Stopwatch)
+import {useRef, useState} from 'react'
 
 function App() {
-  return (
-    // Link should be inside the BrowserRouter
-    <BrowserRouter>
-    <Link to='/'>Allen</Link> |
-    <Link to='/neet/online-couching-class-11'>Class 11</Link> |
-    <Link to='/neet/online-couching-class-12'>Class 12</Link>
-      <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="neet/online-couching-class-11" element={<Class11Program />} />
-      <Route path="neet/online-couching-class-12" element={<Class12Program />} />
-      <Route path='*' element={<ErrorPage />} />
-      </Routes>
-    </BrowserRouter>
-  )
-}
 
-function Landing() {
+  const [currentCount, setCurrentCount] = useState(0);
+  const timer = useRef();
+
+  function startClock() {
+    let value = setInterval(function() {
+      setCurrentCount(c => c+1);
+    }, 1000);
+    timer.current = value;
+  }
+
+  function stopClock() {
+    clearInterval(timer.current);
+  }
+
   return <div>
-    Welcome to Allen
+    {currentCount}
+    <br></br>
+    <button onClick={startClock}>Start</button>
+    <button onClick={stopClock}>Stop</button>
   </div>
 }
 
-
-function Class11Program() {
-  return <div>
-    class 11 neet program
-  </div>
-}
-
-
-function Class12Program() {
-  return <div>
-    class 12 neet program
-  </div>
-}
-
-function ErrorPage() {
-  return <diV>
-    Sorry page not found
-  </diV>
-}
 export default App
