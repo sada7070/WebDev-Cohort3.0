@@ -1,31 +1,42 @@
-// Rolling up the state
-// As your application grows, you might find that multiple components need access to the same state. Instead of duplicating state in each component, 
-// you can lift the state up to the Lowest Common Ancestor, allowing the common ancestor to manage it.
+// prop drilling occurs when you need to pass data from a higher-level component down to a lower-level component that is several layers deep in the component tree.
+// The Context API enables you to manage state across your application more effectively, especially when dealing with deeply nested components.
+// The Context API provides a way to share values (state, functions, etc.) between components without having to pass props down manually at every level.
 
-import {useState} from 'react'
+import {useState, createContext, useContext} from 'react'
+
+// creating context which serves as a container for the data you want to share.
+const BulbContext = createContext();
+
 function App() {
+  const [bulbOn, setBulbOn] = useState(true);
 
+  //'Provider' wraps part of your application and provides the context value to all its descendants. Any component that is a child of this Provider can access the context.
   return <>
-    <LightBulb></LightBulb>
+    <BulbContext.Provider value={{
+      bulbOn: bulbOn,
+      setBulbOn: setBulbOn
+    }}>
+      <LightBulb></LightBulb>
+    </BulbContext.Provider>
   </>
 
   function LightBulb() {
-    // state is rolled up here and state variables are sending as props to the children components.
-    const [bulbOn, setBulbOn] = useState(true);
     return <div>
-      <Bulb bulbOn={bulbOn}></Bulb>
-      <Switch bulbOn={bulbOn} setBulbOn={setBulbOn}></Switch>
+      <Bulb></Bulb>
+      <Switch></Switch>
     </div>
   }
 
-  function Bulb({bulbOn}) {
-    // since 'bulbOn' and 'setBuldOn' variable need to be accessed by 'Switch' component and 'bulbOn' by Bulb component, the state is defined to their lowest common ancestor. 
+  function Bulb() {
+    // Consumer: This component subscribes to context changes. It allows you to access the context value (using useContext  hook)
+    const { bulbOn } = useContext(BulbContext);
     return <div>
       {bulbOn ?'Bulb on' : 'Bulb off'}
     </div>
   }
 
-  function Switch({bulbOn, setBulbOn}) {
+  function Switch() {
+    const { bulbOn, setBulbOn } = useContext(BulbContext);
     function toggle () {
       setBulbOn(!bulbOn);
     }
