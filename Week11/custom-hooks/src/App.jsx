@@ -1,22 +1,26 @@
-import { useState } from "react";
-import { useFetch } from "./hooks/useFetch";
-import { usePrev } from "./hooks/usePrev";
+import { useEffect, useState } from "react";
+import { useDebounce } from "./hooks/useDebounce";
+
 
 function App() {
-  const [state, setState] = useState(0);
-  const prev = usePrev(state);
+  const [inputVal, setInputVal] = useState("");
+  // we pass original and updated input values, and delay time as input to the deBounce hook.
+  const debouncedValue = useDebounce(inputVal, 200);
+
+  // this function triggers and update the 'inputval' through 'setInputVal' whenever there is change in input.
+  function change(e) {
+    setInputVal(e.target.value);
+  }
+
+  // useEffect performs the expensive operations like fetch whenever "debouncedValue" changes.
+  useEffect(() => {
+    fetch("api.amazon.com/search");
+    console.log("expensive operations.");
+  }, [debouncedValue]);
 
   return (
     <>
-      <div>{state}</div>
-      <button
-        onClick={() => {
-          setState((curr) => curr + 1);
-        }}
-      >
-        Click Me
-      </button>
-      <p>The previous value was {prev}</p>
+      <input type="text" onChange={change}></input>
     </>
   );
 }
