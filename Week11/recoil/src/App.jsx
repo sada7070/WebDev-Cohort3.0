@@ -1,65 +1,48 @@
-// while using useState hook, react re-rendering all the childrens of the parent component when it changes even though childerns are not changing.
-// memo lets you skip re-rendering a children component when its props are unchanged.
-import { useEffect, useState, memo } from "react";
+/*  recoil with selector:
+  > A selector represents a piece of derived state. You can think of derived state as the output of passing state to a pure function that derives a new value from the said state.
+  > Derived state is a powerful concept because it lets us build dynamic data that depends on other data.
+  > refer image 'react-selector-example' to understand the below example
+*/
+
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
+import { counterAtom, evenSelector } from "./store/atoms/counter";
 
 function App() {
-  return (
-    <>
-        <Counter></Counter>
-    </>
-  );
+  return <div>
+    <RecoilRoot>
+      <Buttons></Buttons>
+      <Counter></Counter>
+      <IsEven></IsEven>
+    </RecoilRoot>
+  </div>
 }
 
+function Buttons(){
+  const setCount = useSetRecoilState(counterAtom);
+
+  return <div>
+    <button onClick={() => setCount(c => c+2)}>Increase</button>    
+    <button onClick={() => setCount(c => c-1)}>Decrease</button>    
+  </div>
+}
+
+// subscribing to the atom
 function Counter() {
-  const [count, setCount] = useState(0);
+  const count = useRecoilValue(counterAtom);
 
-  useEffect(() => {
-    setInterval(() => {
-      setCount(c => c+1); 
-    }, 3000);
-  }, []);
-
-  // re-rendering following components every 3 sec.
-  return (
-    <div>
-      <CurrentCount count={count}></CurrentCount>
-      <Increase></Increase>
-      <Decrease></Decrease>
-    </div>
-  );
+  return <div>
+    {count}
+  </div>
 }
 
-// even though 'CurrentCount' in memoized, it re-renders since thee props are changing.
-const CurrentCount = memo(function({count}) {
-  return <div>{count}</div>;
-})
+// subscribing to the selector
+// it re-renders only when there is a change in isEven value, it will not check whether the change in counter made any changes in isEven.  
+function IsEven() {
+  const even = useRecoilValue(evenSelector);
 
-// no re-rendering since no props have been changed/passed
-const Increase = memo(function() {
-
-  function increase() {
-    setCount((c) => c + 1);
-  }
-
-  return (
-    <div>
-      <button onClick={increase}>Increase</button>
-    </div>
-  );
-})
-
-// no re-rendering since no props have been changed/passed
-const Decrease = memo(function() {
-
-  function decrease() {
-    setCount((c) => c - 1);
-  }
-
-  return (
-    <div>
-      <button onClick={decrease}>Decrease</button>
-    </div>
-  );
-})
+  return <div>
+    {even ? "even" : "odd"}
+  </div>
+}
 
 export default App;
