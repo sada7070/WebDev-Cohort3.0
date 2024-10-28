@@ -1,7 +1,7 @@
 /*  recoil with selector:
   > A selector represents a piece of derived state. You can think of derived state as the output of passing state to a pure function that derives a new value from the said state.
   > Derived state is a powerful concept because it lets us build dynamic data that depends on other data.
-  > refer image 'react-selector-example' to understand the below example
+  > refer image 'react-selector-example' to understand the below example.
 */
 
 import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
