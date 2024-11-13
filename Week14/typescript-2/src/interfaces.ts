@@ -1,14 +1,22 @@
 // "interfaces" are used to define custom types 
 
 // defining 'interface'
+interface Address {
+    city: String;
+    country: "India";                         // here we are making only the person with Indian indentity can cast vote.
+    pincode: number;   
+}
+
+// taking interface as value to the 'address' key
+interface Office {
+    officeName: String;
+    address: Address
+}
+
 interface User {
     name: String;
     age: number;
-    address?: {                             // adding '?' at the end of the key makes that particular key optional to define.
-        city: String;
-        country: "India";                   // here we are making only the person with Indian indentity can cast vote.
-        pincode: number;
-    }
+    address?: Address                         // adding '?' at the end of the key makes that particular key is optional to define.
 }
 
 let user1: User = {
