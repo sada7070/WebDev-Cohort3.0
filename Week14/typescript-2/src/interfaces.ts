@@ -43,3 +43,21 @@ if(isLeagal(user2)) {
 } else {
     console.log("User can not vote.");
 }
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+// passing function as a key to the interface
+interface People {
+    name: String;
+    age: number;
+    greet(): String;    
+}
+let person: People = {
+    name: "Sada",
+    age: 22,
+    greet: () => {
+        return "hi"
+    }
+}
+const greeting = person.greet();
+console.log(greeting);
