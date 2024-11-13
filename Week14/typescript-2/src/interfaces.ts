@@ -61,3 +61,21 @@ let person: People = {
 }
 const greeting = person.greet();
 console.log(greeting);
+
+// You can create a class which implements this interface.
+// This is useful since now you can create multiple variants of a person (Manager, CEO …)
+interface ppl {
+    name: String;
+    age: number;
+}
+class Manager implements ppl {
+    name: String;
+    age: number;
+
+    constructor(name: String, age: number) {
+        this.name = name;
+        this.age = age;
+    }
+}
+let newUser = new Manager("Sada", 22);
+console.log(newUser.age);
