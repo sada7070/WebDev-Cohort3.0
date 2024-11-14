@@ -68,7 +68,7 @@ interface ppl {
     name: String;
     age: number;
 }
-class Manager implements ppl {
+class worker implements ppl {
     name: String;
     age: number;
 
@@ -77,5 +77,5 @@ class Manager implements ppl {
         this.age = age;
     }
 }
-let newUser = new Manager("Sada", 22);
+let newUser = new worker("Sada", 22);
 console.log(newUser.age);
