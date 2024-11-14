@@ -43,3 +43,28 @@ let t: TeamLead = {
 console.log(t.department);
 console.log(t.name);
 console.log(t.startDate);
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Union (|): It allows a variable to hold a value that could be of multiple specified types. For example, string | number means the variable can be either a string or a number.
+type Admin = {
+    name: String;
+    adminPassword: String;
+}
+type NewUser = {
+    name: String;
+    userPassword: String;
+}
+
+// way to do union of types
+type AdminOrUser = Admin | NewUser;
+
+let user: AdminOrUser = {
+    name: "Sada",
+    adminPassword: "abc123",
+    userPassword: "kabhfaen"
+}
+// here i am not able to log both passwords since both of them are used in object 'user'. They can not be used together in type 'AdminOrNewUser'
+console.log(user.name);
+//console.log(user.adminPassword);
+//console.log(user.userPassword);
