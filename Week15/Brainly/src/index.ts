@@ -15,14 +15,15 @@ app.post("/api/v1/signup", async (req, res) => {
         username: z.string().min(6).max(15),
         password: z.string().min(8).max(20),
     })
-    const  parseData = requiredBody.safeParse(req.body);
+    const parseData = requiredBody.safeParse(req.body);
 
     if(!parseData.success) {
-        return res.status(422).json({
+        res.status(422).json({
             message: "Incorrect format.",
             // to print the error
             error: parseData.error
         })
+        return;
     }
 
     let errorThrown = false;
@@ -35,6 +36,7 @@ app.post("/api/v1/signup", async (req, res) => {
             username,
             password: hashedPassword
         })
+        // if the username already exist in the model, then it will trigger the catch function
     } catch(e) {
         res.status(409).json({
             messsage: "Username already exist."
@@ -49,9 +51,37 @@ app.post("/api/v1/signup", async (req, res) => {
     }
 });
 
-app.post("/api/v1/signin", (req, res) => {
-    
-})
+app.post("/api/v1/signin", async (req, res) => {
+    const{ username, password } = req.body;
+    // checking whether the entered username exist in db or not
+    const userExist = await UserModel.findOne({
+        username: username
+    })
+
+    if(!userExist) {
+        res.status(403).json({
+            message: "username does not exist."
+        })
+        return;
+    }
+    //    // verifying enterd password with hashed password
+    const passwordMatched = await bcrypt.compare(password, userExist.password);
+
+    if(passwordMatched) {
+        const token = jwt.sign({
+            // creating token using unique value(ObjectId)
+            id: userExist._id.toString()
+        }, process.env.JWT_USER_SECRET);
+
+        res.json({
+            token: token
+        })
+    } else {
+        res.status(403).json({
+            message: "Wrong password."
+        })
+    }
+});
 
 app.post("/api/v1/content", (req, res) => {
     
