@@ -1,11 +1,12 @@
 import express from "express";
-import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import bcrypt from "bcrypt";
 import { UserModel } from "./db";
+// import { userMiddleware } from "./middleware";
 
 const app = express();
+app.use(express.json());
 
 app.post("/api/v1/signup", async (req, res) => {
     const{ username, password } = req.body;
@@ -64,14 +65,14 @@ app.post("/api/v1/signin", async (req, res) => {
         })
         return;
     }
-    //    // verifying enterd password with hashed password
-    const passwordMatched = await bcrypt.compare(password, userExist.password);
+    // verifying enterd password with hashed password
+    const passwordMatched = await bcrypt.compare(password, (userExist.password as string));    // using 'type assertion' to maked userExist.password to type string
 
     if(passwordMatched) {
         const token = jwt.sign({
             // creating token using unique value(ObjectId)
             id: userExist._id.toString()
-        }, process.env.JWT_USER_SECRET);
+        }, process.env.JWT_USER_SECRET!);
 
         res.json({
             token: token
@@ -98,3 +99,5 @@ app.post("/api/v1/brain/share", (req, res) => {
 app.get("/api/v1/brain/:shareLink", (req, res) => {
     
 })
+
+app.listen(3000);
