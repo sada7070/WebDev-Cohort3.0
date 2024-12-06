@@ -13,16 +13,18 @@ app.post("/signup", async (req, res) => {
     const { username, email, password } = req.body;
     try{
         /*
-            the following query statement allows SQL injection which leads to loosing DB data.
-            for example if someone inject data as below it will clear all of your data
+            if someone inject data as below it will clear all of your data
             {
                 "username": "ram",
                 "email": "ram@gmial.com",
                 "password": "123123');delete from users; insert into users(username, email, password) values('you', 'got', 'screwed"
             }
             then the only data present in table is 'you got screwed'.
+
+            to overcome this we take inputs which are not appended to the  origianl query as shown below
         */
-        const response = await pgClient.query(`insert into users (username, email, password) values('${username}', '${email}', '${password}');`);
+        const insertQuery = `insert into users (username, email, password) values($1, $2, $3);`
+        const response = await pgClient.query(insertQuery, [username, email, password]);
         res.json({
             message: "You have signed up."
         })
