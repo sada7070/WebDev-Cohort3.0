@@ -18,10 +18,14 @@ wss.on("connection", (socket) => {
     socket.on("message", (message) => {
         console.log("message recieved " + message.toString());
 
-        for(let i = 0; i < allSockets.length; i++) {    
-            const s = allSockets[i];
+        allSockets.forEach(s => {    
             // to send message  from client
             s.send(message.toString() + " sent from client server.");
-        }
+        })
+    })
+
+    // If the disconnected socket object is present in the allSockets array, it will be removed, and the result will be a new array that doesn't include the specified socket.
+    socket.on("disconnect", () => {
+        allSockets = allSockets.filter(x => x != socket);
     })
 })
