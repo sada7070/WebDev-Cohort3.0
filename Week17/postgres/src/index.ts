@@ -56,4 +56,19 @@ app.post("/signup", async (req, res) => {
     }
 })
 
+// JOINS in SQL
+
+app.get("/metadata", async (req, res) => {
+    const id = req.query.id;
+    const query =   `SELECT u.id, u.username, u.email, a.city, a.country, a.street, a.pincode
+                     FROM users u JOIN addresses a
+                     ON u.id = a.user_id
+                     WHERE u.id  = $1;`
+    const response = await pgClient.query(query, [id]);
+
+    res.json({
+        response: response.rows
+    })
+})
+
 app.listen(process.env.PORT);
