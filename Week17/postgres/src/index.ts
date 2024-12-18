@@ -23,15 +23,27 @@ app.post("/signup", async (req, res) => {
 
             to overcome this we take inputs which are not appended to the  origianl query as shown below
         */
-        const userInsertQuery = `insert into users (username, email, password) values($1, $2, $3) RETURNING id;`
+
         // 'RETURNING id' is to return the id number.rows[0].id
-        const userResponse = await pgClient.query(userInsertQuery, [username, email, password]);
-
-        const userId = userResponse.rows[0].id;
-
+        const userInsertQuery = `insert into users (username, email, password) values($1, $2, $3) RETURNING id;`
         // inserting values to the 2nd table by creating relationship with the first table using 'userId'
         const addressesInsertQuery = `insert into addresses (city, country, street, pincode, user_id) values($1, $2, $3, $4, $5)`
+
+        /*
+            What if one of the queries (address query for example) fails? 
+            This would require 'transactions' in SQL to ensure either both the user information and address goes in, or neither does
+        */
+       // transaction bigins
+        await pgClient.query("BEGIN");
+
+        const userResponse = await pgClient.query(userInsertQuery, [username, email, password]);
+        // extracting user_id from users table
+        const userId = userResponse.rows[0].id;
+        await new Promise(x => setInterval(x, 100000));     // trying to partially run querry using setInterval
         const addressesResponse = await pgClient.query(addressesInsertQuery, [city, country, street, pincode, userId]);
+
+        // finishing transaction
+        await pgClient.query("COMMIT");
 
         res.json({
             message: "You have signed up."
