@@ -10,7 +10,7 @@ const pgClient = new Client(process.env.DB_STRING);
 pgClient.connect();
 
 app.post("/signup", async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, city, country, street, pincode } = req.body;
     try{
         /*
             if someone inject data as below it will clear all of your data
@@ -23,8 +23,16 @@ app.post("/signup", async (req, res) => {
 
             to overcome this we take inputs which are not appended to the  origianl query as shown below
         */
-        const insertQuery = `insert into users (username, email, password) values($1, $2, $3);`
-        const response = await pgClient.query(insertQuery, [username, email, password]);
+        const userInsertQuery = `insert into users (username, email, password) values($1, $2, $3) RETURNING id;`
+        // 'RETURNING id' is to return the id number.rows[0].id
+        const userResponse = await pgClient.query(userInsertQuery, [username, email, password]);
+
+        const userId = userResponse.rows[0].id;
+
+        // inserting values to the 2nd table by creating relationship with the first table using 'userId'
+        const addressesInsertQuery = `insert into addresses (city, country, street, pincode, user_id) values($1, $2, $3, $4, $5)`
+        const addressesResponse = await pgClient.query(addressesInsertQuery, [city, country, street, pincode, userId]);
+
         res.json({
             message: "You have signed up."
         })
@@ -35,7 +43,5 @@ app.post("/signup", async (req, res) => {
         })
     }
 })
-
-
 
 app.listen(process.env.PORT);
