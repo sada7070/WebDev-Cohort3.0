@@ -4,14 +4,15 @@ const client = new PrismaClient();
 
 // the following code will insert value into the user table(no need to write raw query).
 async function createUSer() {
-    await client.user.create({
-        data: {
-            username: "Sada",
-            password: "123",
-            age: 22,
-            city: "Gpet"
+    const user = await client.user.findFirst({
+        where: {
+            id: 1
+        },
+        include: {
+            todos: true
         }
     })
+    console.log(user);
 }
 
 createUSer();

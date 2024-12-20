@@ -14,8 +14,9 @@ model User {
   password    String
   age         Int
   city        String
+  todos       Todo[]                   // you have to define the foriegn table which acces this table(this will not be converted into SQL)
 }
-// to add this user table we should migrate it by running 'npx prisma migrate dev'
+// to convert this user schema to SQL we should migrate it by running 'npx prisma migrate dev'
 
 // model for todo table
 model Todo {
@@ -23,7 +24,8 @@ model Todo {
   title         String
   discription   String
   done          Boolean
-  user_id       Int              
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])            // adding relationship in prisma
 }
 
 /*
