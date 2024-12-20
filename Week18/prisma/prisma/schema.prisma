@@ -6,3 +6,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// defining schema(it is not table)
+model User {
+  id          Int      @default(autoincrement())   @id   //@id means primary key
+  username    String   @unique
+  password    String
+  age         Int
+  city        String
+}
+// to add this user table we should migrate it by running 'npx prisma migrate dev'
+
+// model for todo table
+model Todo {
+  id            Int      @default(autoincrement())   @id
+  title         String
+  discription   String
+  done          Boolean
+  user_id       Int              
+}
