@@ -25,3 +25,9 @@ model Todo {
   done          Boolean
   user_id       Int              
 }
+
+/*
+  2 main steps we should  do after creating models
+      (1) npx prisma migrate dev  =>  to migrate your database whenever you change your schema in schema.prisma file
+      (2) npx prisma generate     =>  to generate new prisma client(i.e., a bunch of files inside node_modules/@prisma/clients) 
+*/
