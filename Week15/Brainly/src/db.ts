@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     username: {type: String, unique: true},
     password: String
 })
-export const UserModel = model("user", UserSchema);
+export const UserModel = model("User", UserSchema);
 
 const ContentSchema = new Schema({
     title: String,

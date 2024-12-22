@@ -86,9 +86,9 @@ app.post("/api/v1/signin", async (req, res) => {
     }
 });
 
-app.post("/api/v1/content", userMiddleware, (req, res) => {
+app.post("/api/v1/content", userMiddleware, async (req, res) => {
     const { link, title } = req.body;
-    ContentMondel.create({
+    await ContentMondel.create({
         link,
         title,
         // @ts-ignore
@@ -101,12 +101,33 @@ app.post("/api/v1/content", userMiddleware, (req, res) => {
     })
 })
 
-app.get("/api/v1/content", (req, res) => {
-    
+app.get("/api/v1/content", userMiddleware, async (req, res) => {
+    // @ts-ignore
+    const userId = req.userId;
+    const content = await ContentMondel.find({
+        userId: userId
+    }).populate("userId", "username")                           // using references/relationship to get username along with the content.
+    res.json({
+        content
+    })
 })
 
-app.post("/api/v1/brain/share", (req, res) => {
-    
+app.delete("/api/v1/content",userMiddleware, async (req, res) => {
+    const contentId = req.body.contentId;
+
+    await ContentMondel.deleteMany({
+        contentId,
+        //@ts-ignore
+        userId: req.userId
+    })
+
+    res.json({
+        message: "Deleted"
+    })
+})
+
+app.post("/api/v1/brain/share", (req,res) => {
+
 })
 
 app.get("/api/v1/brain/:shareLink", (req, res) => {
