@@ -2,19 +2,20 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import bcrypt from "bcrypt";
-import { UserModel } from "./db";
-// import { userMiddleware } from "./middleware";
+require('dotenv').config()
+import { ContentMondel, UserModel } from "./db";
+import { userMiddleware } from "./middleware";
 
 const app = express();
 app.use(express.json());
 
-app.post("/api/v1/signup", async (req, res) => {
+app.post("/api/v1/signup", async (req, res) => { 
     const{ username, password } = req.body;
     
     // input validation using zod
     const requiredBody = z.object({
-        username: z.string().min(6).max(15),
-        password: z.string().min(8).max(20),
+        username: z.string().min(3).max(15),
+        password: z.string().min(3).max(20),
     })
     const parseData = requiredBody.safeParse(req.body);
 
@@ -54,6 +55,7 @@ app.post("/api/v1/signup", async (req, res) => {
 
 app.post("/api/v1/signin", async (req, res) => {
     const{ username, password } = req.body;
+
     // checking whether the entered username exist in db or not
     const userExist = await UserModel.findOne({
         username: username
@@ -61,17 +63,17 @@ app.post("/api/v1/signin", async (req, res) => {
 
     if(!userExist) {
         res.status(403).json({
-            message: "username does not exist."
+            message: "Username does not exist."
         })
         return;
     }
     // verifying enterd password with hashed password
-    const passwordMatched = await bcrypt.compare(password, (userExist.password as string));    // using 'type assertion' to maked userExist.password to type string
+    const passwordMatched = await bcrypt.compare(password, (userExist.password as string));    // using 'type assertion' to convert userExist.password to type string
 
     if(passwordMatched) {
         const token = jwt.sign({
             // creating token using unique value(ObjectId)
-            id: userExist._id.toString()
+            id: userExist._id
         }, process.env.JWT_USER_SECRET!);
 
         res.json({
@@ -84,8 +86,19 @@ app.post("/api/v1/signin", async (req, res) => {
     }
 });
 
-app.post("/api/v1/content", (req, res) => {
-    
+app.post("/api/v1/content", userMiddleware, (req, res) => {
+    const { link, title } = req.body;
+    ContentMondel.create({
+        link,
+        title,
+        // @ts-ignore
+        userId: req.userId,
+        tags: []
+    })
+
+    res.json({
+        message: "Content added."
+    })
 })
 
 app.get("/api/v1/content", (req, res) => {
@@ -100,4 +113,4 @@ app.get("/api/v1/brain/:shareLink", (req, res) => {
     
 })
 
-app.listen(3000);
+app.listen(process.env.PORT_NUM!);
