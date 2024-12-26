@@ -4,7 +4,7 @@ import axios from "axios"
 // useEffect talks with client(browser) without the server, so we will unable to get nextjs benifits.
 // but this method directly talks with server not with client(browser)
 export default async function Users() {
-    const response = await axios.get("https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details")
+    const response = await axios.get("http://localhost:3000/api/v1/user/details")
     const data = response.data;
 
     await new Promise(r => setTimeout(r, 5000));
