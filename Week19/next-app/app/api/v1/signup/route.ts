@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/app/lib/db";
 
-const prismaClient = new PrismaClient();
+const prismaClient = prisma;
 
 export async function POST(req: NextRequest) {
     // extracting body came from FE

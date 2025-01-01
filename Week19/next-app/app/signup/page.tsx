@@ -12,10 +12,10 @@ export default function Signyp() {
 
     return <div className="w-screen h-screen flex justify-center items-center">
         <div className="border p-2">
-            <input type="text" placeholder="username.." onChange={e => {             // e = event. when a new  keystroke happen it will be set
+            <input type="text" className="text-black" placeholder="username.." onChange={e => {             // e = event. when a new  keystroke happen it will be set
                 setUserName(e.target.value);
             }}></input>
-            <input type="text" placeholder="password.." onChange={e => {
+            <input type="text" className="text-black" placeholder="password.." onChange={e => {
                 setPassword(e.target.value);
             }}></input>
 
