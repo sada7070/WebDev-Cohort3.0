@@ -1,0 +1,1 @@
+(auth)   =>   wrapping folder name with braces makes them invisible in the URL.
