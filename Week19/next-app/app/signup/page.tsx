@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRouter } from "next/navigation";
 import { useState } from "react"
 
-export default function Signyp() {
+export default function Signup() {
 
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
