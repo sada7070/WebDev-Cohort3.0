@@ -13,11 +13,6 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
-        const username = credentials?.username;
-        const password = credentials?.password;
-        console.log(username);
-        console.log(password);
-
         // DB request to check if the username and password are correct.
         const user = {
           name: "Sada",
@@ -40,7 +35,8 @@ const handler = NextAuth({
       clientId: "akjdna",
       clientSecret: "jwbajdfn"
     })
-  ]
+  ],
+  secret: process.env.NEXTAUTH_SECRET
 })
 
 export { handler as GET, handler as POST }

@@ -1,17 +1,15 @@
-"use client"
-import { SessionProvider, signIn, signOut, useSession } from "next-auth/react"
+import { getServerSession } from "next-auth"
 
 export default function Home() {
-  return <SessionProvider>
+  return <div>
     <RealHome />
-  </SessionProvider>
+  </div>
 }
 
-function RealHome() {
-  const session = useSession()
+async function RealHome() {
+  const session = await getServerSession();
 
   return <div>
-    {session.status === "authenticated" && <button className="border p-2 rounded-lg" onClick={() => signOut()}>Logout</button>}
-    {session.status === "unauthenticated" && <button className="border p-2 rounded-lg" onClick={() => signIn()}>SignIn</button>}
+    {JSON.stringify(session)}
   </div>
 }
