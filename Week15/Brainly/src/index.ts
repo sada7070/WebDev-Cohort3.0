@@ -16,7 +16,7 @@ app.post("/api/v1/signup", async (req, res) => {
     const requiredBody = z.object({
         username: z.string().min(3).max(15),
         password: z.string().min(3).max(20),
-    })
+    })  
     const parseData = requiredBody.safeParse(req.body);
 
     if(!parseData.success) {
