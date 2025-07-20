@@ -26,6 +26,6 @@ app.listen(3000);
 /*
     to run it
       > run 'node 1index.js' in your local terminal.
-      > open chrome and eun 'localhost:3000/?n=10'.
+      > open chrome and run 'localhost:3000/?n=10'.
         here '?' is a query parameter, and the following thing is the input value.
 */
